@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import SunIcon from "@/components/icons/SunIcon";
 import MoonIcon from "@/components/icons/MoonIcon";
 
+// only the vars that differ in light mode — dark mode is the default so we just remove these to go back
 const LIGHT_VARS: Record<string, string> = {
   "--background": "#f0f4ff",
   "--foreground": "#1e293b",
@@ -39,10 +40,12 @@ function applyTheme(dark: boolean) {
 }
 
 export default function ThemeToggle() {
+  // default to dark — most people seem to prefer it
   const [isDark, setIsDark] = useState(true);
 
   useEffect(() => {
     const stored = localStorage.getItem("agora-theme");
+    // anything other than "light" counts as dark, including a fresh visit with nothing stored
     const dark = stored !== "light";
     setIsDark(dark);
     applyTheme(dark);

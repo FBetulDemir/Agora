@@ -26,6 +26,7 @@ export default function Toggle({
         disabled ? "opacity-50 cursor-not-allowed" : "cursor-pointer",
         className,
       )}>
+      {/* using a button with role="switch" so screen readers treat it like a proper toggle */}
       <button
         type="button"
         role="switch"
@@ -40,6 +41,7 @@ export default function Toggle({
             : "bg-[var(--border-card-strong)]",
           disabled && "cursor-not-allowed",
         )}>
+        {/* the white thumb that slides left/right */}
         <span
           className={cn(
             "pointer-events-none inline-block h-5 w-5 rounded-full bg-white shadow-sm transition-transform",

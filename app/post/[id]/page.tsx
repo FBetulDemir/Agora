@@ -17,6 +17,7 @@ import {
 } from "@/lib/comments";
 import { getStoredProfile, Profile } from "@/lib/profile";
 
+// rough human-readable time — good enough for a forum, no need for exact timestamps
 function timeAgo(dateStr: string): string {
   const now = Date.now();
   const diff = now - new Date(dateStr).getTime();
@@ -31,6 +32,9 @@ function timeAgo(dateStr: string): string {
   return `${months}mo ago`;
 }
 
+// a "node" here is just one comment that already knows its replies (children) —
+// buildCommentTree wires those up from the flat DB list before we get here.
+// this function just renames the fields into the shape PostThread expects
 function nodeToReply(node: CommentNode): Reply {
   return {
     id: String(node.id),
@@ -66,6 +70,7 @@ export default function PostDetailPage() {
   const [likeActive, setLikeActive] = useState(false);
   const [loading, setLoading] = useState(true);
 
+  // fetch the post and its comments in parallel so the page loads faster
   const loadData = async (userId: number) => {
     try {
       const [postData, commentsData] = await Promise.all([
@@ -91,6 +96,7 @@ export default function PostDetailPage() {
   useEffect(() => {
     const stored = getStoredProfile();
     if (!stored) {
+      // no profile means they haven't gone through onboarding yet
       router.push("/welcome");
       return;
     }
