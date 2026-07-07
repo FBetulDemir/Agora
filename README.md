@@ -107,8 +107,3 @@ lib/               # Supabase client, posts, comments, profile logic
 
 The app is deployed on [Vercel](https://vercel.com). Add the environment variables above in your Vercel project settings.
 
----
-
-## License
-
-This project was developed as a thesis project at Chalmers University of Technology.
